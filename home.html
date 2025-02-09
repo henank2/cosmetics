@@ -3,84 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Glows</title>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <title>Hello Glows - Your Personal Skincare Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .main {
-            height: 100vh;
+        body {
+            background: linear-gradient(135deg, #fce8f3 0%, #ffffff 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
-        .page1 {
-            height: 400px;
-            width: 50%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-        }
-
-        .page1 img {
-            width: 300px;  /* Reduced width */
-            height: 500px; /* Reduced height */
-            object-fit: cover;
-            border-radius: 10px; /* Optional: adds rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds subtle shadow */
-        }
-
-        .greeting {
-            font-family: 'Alex Brush', cursive;
-            font-size: 5rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin: 0;
-            padding: 0;
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
             text-align: center;
-            position: relative;
-            z-index: 2;
         }
 
-        .enter-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(126, 112, 112, 0.664);
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .hero {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            color: #d4649f;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .subtitle {
             font-size: 1.2rem;
-            color: #333;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .enter-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 0.3s;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(212, 100, 159, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature h3 {
+            color: #d4649f;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 40px 40px;
+            background: #d4649f;
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 0.6s;
+            box-shadow: 0 5px 15px rgba(212, 100, 159, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 100, 159, 0.4);
+            background: #c15590;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="main">
-        <div class="page1">
-            <img src="https://i.pinimg.com/736x/45/83/fc/4583fc8bcbc9039afdd561e786a0c485.jpg" alt="">
-            <h1 class="greeting">hello glows</h1>
-            <a href="indexv2.html" class="enter-btn"></a>
+    <div class="container">
+        <div class="hero">
+            <h1 class="title">Hello Glows</h1>
         </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>Personalized Analysis</h3>            </div>
+            <div class="feature">
+                <h3>Smart Product Matching</h3>
+            </div>
+            
+        </div>
+
+        <a href="indexv2.html" class="cta-button"></a>
     </div>
 </body>
 </html>

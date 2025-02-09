@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skin Analysis & AI Recommendations</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .container h1{
         font-size: 40px;
@@ -143,11 +144,13 @@
         }
 
         .error {
-            color: #f44336;
+            color: #dc3545;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
             padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #f44336;
             border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
         }
 
         .hidden {
@@ -160,6 +163,68 @@
         } */
         .class1 {
             padding-top: 9%;
+        }
+
+        /* Markdown response styling */
+        .markdown-response {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .markdown-response h1, 
+        .markdown-response h2, 
+        .markdown-response h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .markdown-response ul, 
+        .markdown-response ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .markdown-response p {
+            margin: 12px 0;
+        }
+
+        .markdown-response strong {
+            color: #d4649f;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background-color: #d4649f;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #c15590;
         }
     </style>
 </head>
@@ -190,17 +255,12 @@
             </div>
 
 
-            <div id="results" class="results hidden">
-                <div id="loading" class="loading hidden">
-                    Generating personalized recommendations...
-                </div>
-                <div id="error" class="error hidden">
-
-                </div>
-                <div id="results-content" class="results-content">
-
-                </div>
-                <button class="reset-btn" onclick="resetForm()">Start Over</button>
+            <div id="results" class="hidden">
+                <h2 class="results-header">Your Personalized Skincare & Makeup Recommendations</h2>
+                <div id="error" class="error hidden"></div>
+                <div id="loading">Getting your personalized recommendations...</div>
+                <div id="results-content" class="markdown-response"></div>
+                <button onclick="resetForm()" class="back-button">Start Over</button>
             </div>
         </div>
     </div>
@@ -431,18 +491,18 @@ Format the response in clear sections with detailed explanations.`;
 
                 const data = await response.json();
                 document.getElementById('loading').classList.add('hidden');
-                document.getElementById('results-content').innerHTML =
-                    data.choices[0].message.content.replace(/\n/g, '<br>');
+                document.getElementById('results-content').innerHTML = 
+                    marked.parse(data.choices[0].message.content);
             } catch (error) {
                 showError('Failed to get recommendations. Please check your API key and try again.');
             }
         }
 
         function showError(message) {
+            document.getElementById('loading').classList.add('hidden');
             const errorElement = document.getElementById('error');
             errorElement.textContent = message;
             errorElement.classList.remove('hidden');
-            document.getElementById('loading').classList.add('hidden');
         }
 
         function resetForm() {
@@ -454,9 +514,12 @@ Format the response in clear sections with detailed explanations.`;
                 allergies: [],
                 skinProblems: ''
             };
-            document.getElementById('results').classList.add('hidden');
+            document.getElementById('apiKeyInput').value = '';
+            apiKey = '';
             document.getElementById('questionForm').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
             document.getElementById('error').classList.add('hidden');
+            document.getElementById('results-content').innerHTML = '';
             renderQuestion();
         }
 

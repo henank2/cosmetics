@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skin Analysis & AI Recommendations</title>            
+    <title>Skin Analysis & AI Recommendations</title>
     <style>
+        .container h1{
+        font-size: 40px;
+        font-family: 'brush script std'
+
+         ;
+            }
         * {
             margin: 0;
             padding: 0;
@@ -13,17 +20,17 @@
         }
 
         body {
-            background-color: #1160d6;
+            background-color:rgb(236, 196, 208);
             padding: 20px;
         }
 
         .container {
             max-width: 600px;
-            margin: 0 auto;
-            background: gold;
+            margin: auto;
+            background: rgba(250, 242, 138, 0.829);
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 40px;
+            box-shadow: 0 2px 4px rgba(46, 3, 3, 0.1);
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -107,7 +114,7 @@
         }
 
         .next-btn {
-            background-color: #4CAF50;
+            background-color: #b9fcbc;
             color: white;
         }
 
@@ -145,52 +152,63 @@
         .hidden {
             display: none;
         }
+
         /* .head{
             font-size: 30px;
             color: #4CAF50;
         } */
-    
+        .class1 {
+            padding-top: 9%;
+        }
     </style>
 </head>
+
 <body>
-    
-    <div class="container">
-        <h1 class="head">AI-Powered Skin Analysis</h1>
+    <div class="class1">
 
-        <div class="api-key-container">
-            <input type="text" 
-                   id="apiKeyInput" 
-                   placeholder="Enter your GROQ API key"
-                   autocomplete="off" 
-                   value="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" 
-                   readonly>
-        </div>
-        
-        <div id="questionForm">
-            <div class="question-container">
-                <div class="question"></div>
-                <div class="options"></div>
-            </div>
-            
-            <div class="button-group">
-                <button class="prev-btn" onclick="previousQuestion()">Previous</button>
-                <button class="next-btn" onclick="nextQuestion()">Next</button>
-            </div>
-        </div>
+        <div class="container">
 
-        <div id="results" class="results hidden">
-            <div id="loading" class="loading hidden">
-                Generating personalized recommendations...
+          <b>  <h1 class="head"><Data></Data><Data></Data> 
+            Discover your glow</h1></b>
+
+            <!-- <div class="api-key-container">
+                <input type="text" id="apiKeyInput" placeholder="Enter your GROQ API key" autocomplete="off"
+                    value="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" readonly>
+            </div> -->
+
+            <div id="questionForm">
+                <div class="question-container">
+                    <div class="question"></div>
+                    <div class="options"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="prev-btn" onclick="previousQuestion()">Previous</button>
+                    <button class="next-btn" onclick="nextQuestion()">Next</button>
+                </div>
             </div>
-            <div id="error" class="error hidden"></div>
-            <div id="results-content" class="results-content"></div>
-            <button class="reset-btn" onclick="resetForm()">Start Over</button>
+
+
+            <div id="results" class="results hidden">
+                <div id="loading" class="loading hidden">
+                    Generating personalized recommendations...
+                </div>
+                <div id="error" class="error hidden">
+
+                </div>
+                <div id="results-content" class="results-content">
+
+                </div>
+                <button class="reset-btn" onclick="resetForm()">Start Over</button>
+            </div>
         </div>
     </div>
 
+
     <script>
+        
         // Static API Key
-        const apiKey = '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' ;
+        const apiKey = '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';
 
         const questions = [
             {
@@ -237,8 +255,11 @@
                     { value: 'sulfates', label: 'Sulfates' },
                     { value: 'lanolin', label: 'Lanolin (wool derivatives)' },
                     { value: 'beeswax', label: 'Beeswax/Propolis' },
-                    { value: 'preservatives', label: 'Common preservatives (parabens, formaldehyde)' }
-                ]
+                    { value: 'preservatives', label: 'Common preservatives (parabens, formaldehyde)' },
+                    { value: 'other', label: 'Other (Please specify)', hasInput: true } 
+
+                ],
+
             },
             {
                 id: 'skinProblems',
@@ -267,11 +288,11 @@
         function renderQuestion() {
             const question = questions[currentQuestion];
             document.querySelector('.question').textContent = question.question;
-            
+
             const optionsContainer = document.querySelector('.options');
             optionsContainer.innerHTML = '';
 
-            switch(question.type) {
+            switch (question.type) {
                 case 'number':
                     optionsContainer.innerHTML = `
                         <input type="number" 
@@ -328,7 +349,7 @@
             }
 
             document.querySelector('.prev-btn').disabled = currentQuestion === 0;
-            document.querySelector('.next-btn').textContent = 
+            document.querySelector('.next-btn').textContent =
                 currentQuestion === questions.length - 1 ? 'Get Recommendations' : 'Next';
         }
 
@@ -374,7 +395,7 @@ Primary Skin Concern: ${formData.skinProblems}
 
 Please provide:
 1. makeup recommendation suitable for this skin profile
-2. clearly mention the exact product name and the brand in bold letters
+2. clearly mention the exact product name and product brand in bold letters
 3. ingredients to avoid (especially considering any allergies)
 4. specific product types and ingredients to look for 
 5. make a short description of the product and its benefits
@@ -409,7 +430,7 @@ Format the response in clear sections with detailed explanations.`;
 
                 const data = await response.json();
                 document.getElementById('loading').classList.add('hidden');
-                document.getElementById('results-content').innerHTML = 
+                document.getElementById('results-content').innerHTML =
                     data.choices[0].message.content.replace(/\n/g, '<br>');
             } catch (error) {
                 showError('Failed to get recommendations. Please check your API key and try again.');
@@ -442,4 +463,5 @@ Format the response in clear sections with detailed explanations.`;
         renderQuestion();
     </script>
 </body>
+
 </html>
